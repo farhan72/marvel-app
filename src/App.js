@@ -6,14 +6,12 @@ import Home from './modules/Home';
 
 function App() {
   return (
-    <div className="App">
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Login} />
-          <Route exact path="/home" component={Home} />
-        </Switch>
-      </Router>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Login} />
+        <Route exact path="/home" component={Home} />
+      </Switch>
+    </Router>
   );
 }
 
