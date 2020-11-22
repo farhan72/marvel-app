@@ -1,6 +1,8 @@
 import React from 'react';
 import Cookies from 'universal-cookie';
 import { useHistory } from 'react-router-dom';
+import { APIv1 } from '../../helper/authorization';
+import axios from 'axios';
 
 const cookie = new Cookies();
 const Index = () => {
@@ -9,15 +11,16 @@ const Index = () => {
         const now = new Date(),
             expire = new Date();
         const publicKey = 'a775053005dce3b2e0f2dede7c7a1bd9';
-        const privateKey = '42f82eb3d0d38b7545a44a22d9e61c7b29151b98';
         const timestamp = now.getTime();
         expire.setTime(now.getTime() + 3600000 * 24 * 7);
         cookie.set('timestamp', timestamp, { expires: expire });
         cookie.set('publicKey', publicKey, { expires: expire });
-        cookie.set('privateKey', privateKey, { expires: expire });
-        if (cookie.getAll()) {
-            history.push('home');
-        }
+        const params = { limit: 5 }
+        axios.get(APIv1('comics', params)).then(response => {
+            if (response.status === 200) {
+                return history.push('/home');
+            }
+        });
     }
     return (
         <div style={styles.container}>
