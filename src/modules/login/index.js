@@ -4,10 +4,12 @@ import { APIv1 } from '../../helper/authorization';
 import { getComics } from '../../services/comics';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+import Loader from '../../components/loader';
 
 const cookie = new Cookies();
 const Index = () => {
     const [isAuthenticated, setAuthenticatedStatus] = useState(false);
+    const [loading, setLoading] = useState(true);
     const login = () => {
         const now = new Date(),
             expire = new Date();
@@ -17,11 +19,13 @@ const Index = () => {
         cookie.set('timestamp', timestamp, { expires: expire });
         cookie.set('publicKey', publicKey, { expires: expire });
         const params = { limit: 5 }
+        setLoading(true)
         axios.get(APIv1('comics', params)).then(response => {
+            setLoading(false);
             if (response.status === 200) {
                 setAuthenticatedStatus(true);
             }
-        });
+        }).catch(err => setLoading(false));
     }
 
     useEffect(() => checkStatusAPI(), [])
@@ -29,20 +33,29 @@ const Index = () => {
     async function checkStatusAPI() {
         try {
             await getComics();
+            setLoading(false)
             return setAuthenticatedStatus(true);
         } catch (e) {
+            setLoading(false)
             return setAuthenticatedStatus(false);
         }
     }
-
     if (isAuthenticated) {
-        return <Redirect to='/home' />;
+        return (
+            <>
+                <Loader isLoading={loading} />
+                <Redirect to='/home' />
+            </>
+        );
     } else {
         return (
-            <div style={styles.container}>
-                <button style={{ ...styles.btn, ...styles.btnSuccess }}
-                    onClick={() => login()}>Login</button>
-            </div>
+            <>
+                <Loader isLoading={loading} />
+                <div style={styles.container}>
+                    <button style={{ ...styles.btn, ...styles.btnSuccess }}
+                        onClick={() => login()}>Login</button>
+                </div>
+            </>
         )
     }
 }
