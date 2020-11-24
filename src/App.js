@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import Login from './modules/login';
 import Home from './modules/home';
 import { getComics } from './services/comics';
@@ -25,6 +25,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={Login} />
         <RouteGuard path="/home" component={Home} isAuthenticated={isAuthenticated} />
+        <Route exact={true} path="*" render={() => <Redirect to="/home" />} />
       </Switch>
     </Router>
   );

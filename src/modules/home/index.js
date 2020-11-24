@@ -6,11 +6,12 @@ import { useHistory } from 'react-router-dom';
 const cookie = new Cookies();
 function Index() {
     const history = useHistory();
-    // console.log(APIv1('comics'))
     const logout = () => {
         cookie.remove('publicKey');
         cookie.remove('timestamp');
-        history.push('/');
+        if (!cookie.get('publicKey')) {
+            history.push('/');
+        }
     }
     return (
         <>
