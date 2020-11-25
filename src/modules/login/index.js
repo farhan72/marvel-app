@@ -1,45 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import Cookies from 'universal-cookie';
+import cookie from 'js-cookie';
 import { APIv1 } from '../../helper/authorization';
 import axios from 'axios';
 import Loader from '../../components/loader';
 import { Redirect } from 'react-router-dom';
-import { getComics } from '../../services/comics';
 
-const cookie = new Cookies();
 const Index = () => {
     const [isAuthenticated, setAuthenticatedStatus] = useState(false);
     const [loading, setLoading] = useState(true);
     const login = () => {
-        const now = new Date(),
-            expire = new Date();
+        const now = new Date();
         const publicKey = 'a775053005dce3b2e0f2dede7c7a1bd9';
         const timestamp = now.getTime();
-        expire.setTime(now.getTime() + 3600000 * 24 * 7);
-        cookie.set('timestamp', timestamp, { expires: expire });
-        cookie.set('publicKey', publicKey, { expires: expire });
-        const params = { limit: 5 }
+        cookie.set('timestamp', timestamp, { expires: 7 });
+        cookie.set('publicKey', publicKey, { expires: 7 });
         setLoading(true)
-        axios.get(APIv1('comics', params)).then(response => {
-            setLoading(false);
-            if (response.status === 200) {
-                setAuthenticatedStatus(true);
-            }
-        }).catch(err => setLoading(false));
+        checkStatusAPI();
     }
 
     useEffect(() => checkStatusAPI(), [])
 
     async function checkStatusAPI() {
-        try {
-            await getComics();
+        await axios.get(APIv1('comics', { limit: 5 })).then(response => {
+            setLoading(false);
             setAuthenticatedStatus(true);
+        }).catch(err => {
             setLoading(false)
-        } catch (e) {
             setAuthenticatedStatus(false);
-            setLoading(false)
-            return e;
-        }
+        });
     }
 
     return !isAuthenticated ? (

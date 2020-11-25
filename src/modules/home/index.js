@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Cookies from 'universal-cookie';
+import cookie from 'js-cookie';
 import { useHistory, Redirect } from 'react-router-dom';
-import { getComics } from '../../services/comics';
 import Loader from '../../components/loader';
+import Axios from 'axios';
+import { APIv1 } from '../../helper/authorization';
 // import { APIv1 } from '../../helper/authorization';
 
-const cookie = new Cookies();
 function Index() {
     const history = useHistory();
     const [isAuthenticated, userHasAuthenticated] = useState(true);
@@ -22,16 +22,14 @@ function Index() {
 
     useEffect(() => checkStatusAPI(), [])
 
-    async function checkStatusAPI() {
-        try {
-            await getComics();
+    function checkStatusAPI() {
+        Axios.get(APIv1('comics', { limit: 5 })).then(result => {
             userHasAuthenticated(true);
-            setLoading(false)
-        } catch (e) {
+            setLoading(false);
+        }).catch(error => {
             userHasAuthenticated(false);
-            setLoading(false)
-            return e;
-        }
+            setLoading(false);
+        })
     }
 
     if (!isAuthenticated) {

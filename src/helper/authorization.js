@@ -1,6 +1,5 @@
-import Cookies from 'universal-cookie';
+import cookie from 'js-cookie';
 
-const cookie = new Cookies();
 export function APIv1(value, request) {
     const url = new URL(process.env.REACT_APP_BASE_URL_V1 + value);
     const md5 = require('md5'),
