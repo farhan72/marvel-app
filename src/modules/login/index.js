@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Cookies from 'universal-cookie';
 import { APIv1 } from '../../helper/authorization';
-import { getComics } from '../../services/comics';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
 import Loader from '../../components/loader';
+import { Redirect } from 'react-router-dom';
+import { getComics } from '../../services/comics';
 
 const cookie = new Cookies();
 const Index = () => {
@@ -33,31 +33,24 @@ const Index = () => {
     async function checkStatusAPI() {
         try {
             await getComics();
+            setAuthenticatedStatus(true);
             setLoading(false)
-            return setAuthenticatedStatus(true);
         } catch (e) {
+            setAuthenticatedStatus(false);
             setLoading(false)
-            return setAuthenticatedStatus(false);
+            return e;
         }
     }
-    if (isAuthenticated) {
-        return (
-            <>
-                <Loader isLoading={loading} />
-                <Redirect to='/home' />
-            </>
-        );
-    } else {
-        return (
-            <>
-                <Loader isLoading={loading} />
-                <div style={styles.container}>
-                    <button style={{ ...styles.btn, ...styles.btnSuccess }}
-                        onClick={() => login()}>Login</button>
-                </div>
-            </>
-        )
-    }
+
+    return !isAuthenticated ? (
+        <>
+            <Loader isLoading={loading} />
+            <div style={styles.container}>
+                <button style={{ ...styles.btn, ...styles.btnSuccess }}
+                    onClick={() => login()}>Login</button>
+            </div>
+        </>
+    ) : <Redirect to="/" />;
 }
 
 const styles = {

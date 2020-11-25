@@ -4,12 +4,10 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import Login from './modules/login';
 import Home from './modules/home';
 import { getComics } from './services/comics';
-import RouteGuard from './route-guard';
 import Loader from './components/loader';
 
 
 function App() {
-  const [isAuthenticated, userHasAuthenticated] = useState(true);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => checkStatusAPI(), [])
@@ -17,10 +15,8 @@ function App() {
   async function checkStatusAPI() {
     try {
       await getComics();
-      userHasAuthenticated(true);
       setLoading(false);
     } catch (e) {
-      userHasAuthenticated(false);
       setLoading(false);
     }
   }
@@ -28,9 +24,9 @@ function App() {
     <>
       <Router>
         <Switch>
-          <Route exact path="/" component={Login} />
-          <RouteGuard path="/home" component={Home} isAuthenticated={isAuthenticated} />
-          <Route exact={true} path="*" render={() => <Redirect to="/home" />} />
+          <Route exact path="/" component={Home} />
+          <Route exact path="/login" component={Login} />
+          <Route exact={true} path="*" render={() => <Redirect to="/" />} />
         </Switch>
       </Router>
       <Loader isLoading={loading} />
