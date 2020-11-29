@@ -1,35 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import Login from './modules/login';
-import Home from './modules/home';
-import { getComics } from './services/comics';
-import Loader from './components/loader';
+import Login from './containers/login';
+// import Home from './containers/home';
+import Layout from './components/layout';
 
 
 function App() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => checkStatusAPI(), [])
-
-  async function checkStatusAPI() {
-    try {
-      await getComics();
-      setLoading(false);
-    } catch (e) {
-      setLoading(false);
-    }
-  }
   return (
     <>
       <Router>
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={Layout} />
           <Route exact path="/login" component={Login} />
           <Route exact={true} path="*" render={() => <Redirect to="/" />} />
         </Switch>
       </Router>
-      <Loader isLoading={loading} />
     </>
   );
 }
