@@ -4,7 +4,6 @@ import React from 'react';
 function Index() {
     return (
         <>
-            <button type="button" onClick={() => logout()}>Logout</button>
             <h1>Iki Home Su</h1>
         </>
     )

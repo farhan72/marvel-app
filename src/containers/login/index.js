@@ -21,16 +21,21 @@ const Index = () => {
     useEffect(() => checkStatusAPI(), [])
 
     async function checkStatusAPI() {
-        await axios.get(APIv1('comics', { limit: 5 })).then(response => {
-            setLoading(false);
+        try {
+            await axios.get(APIv1('comics', { limit: 5 }));
             setAuthenticatedStatus(true);
-        }).catch(err => {
-            setLoading(false)
+            setLoading(false);
+        } catch (e) {
             setAuthenticatedStatus(false);
-        });
+            setLoading(false);
+        }
     }
 
-    return !isAuthenticated ? (
+    if (isAuthenticated) {
+        return  <Redirect to="/" />;
+    }
+
+    return (
         <>
             <Loader isLoading={loading} />
             <div style={styles.container}>
@@ -38,7 +43,7 @@ const Index = () => {
                     onClick={() => login()}>Login</button>
             </div>
         </>
-    ) : <Redirect to="/" />;
+    );
 }
 
 const styles = {

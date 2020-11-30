@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../header'
-import Axios from 'axios';
+import axios from 'axios';
 import { APIv1 } from '../../helper/authorization';
 import { Redirect } from 'react-router-dom';
 import Loader from '../loader'
 
 function Layout() {
-    const [isAuthenticated, userHasAuthenticated] = useState(true);
-    const [loading, setLoading] = useState(true);
+    const [isAnauthenticated, userAnauthenticated] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-    useEffect(() => checkStatusAPI(), [isAuthenticated])
+    useEffect(() => checkStatusAPI(), []);
 
-    function checkStatusAPI() {
-        Axios.get(APIv1('comics', { limit: 5 })).then(result => {
-            userHasAuthenticated(true);
+    async function checkStatusAPI() {
+        try {
+            await axios.get(APIv1('comics', { limit: 5 }));
+            userAnauthenticated(false);
             setLoading(false);
-        }).catch(error => {
-            userHasAuthenticated(false);
+        } catch (e) {
+            userAnauthenticated(true);
             setLoading(false);
-        })
+        }
     }
 
-    if (!isAuthenticated) {
+    if (isAnauthenticated) {
         return (
             <>
                 <Loader isLoading={loading} />

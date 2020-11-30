@@ -11,9 +11,9 @@ function App() {
     <>
       <Router>
         <Switch>
-          <Route exact path="/" component={Layout} />
+            <Route exact path="/" component={Layout} />
           <Route exact path="/login" component={Login} />
-          <Route exact={true} path="*" render={() => <Redirect to="/" />} />
+          <Route exact path="*" render={() => <Redirect to="/" />} />
         </Switch>
       </Router>
     </>
