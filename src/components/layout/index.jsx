@@ -42,7 +42,7 @@ function Layout() {
         <>
             <Header />
 
-            <Container className="mt-1">
+            <Container className="mt-1 mt-sm-1">
                 <Route exact path="/home" render={props => (
                     <Suspense fallback={<Loader isLoading={loading} />}>
                         <Home {...props} />

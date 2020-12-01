@@ -5,11 +5,12 @@
     display: none !important;
 }
 .navbar .right-item {
+    z-index: 99999 !important;
     margin: 0 !important;
     padding: 0 !important;
 }
 
-@media only screen and (min-width: 460px) and (max-width: 500px) {
+@media only screen and (min-width: 300px) and (max-width: 500px) {
     .navbar .burger-button {
         cursor: pointer;
         display: flex !important;
@@ -25,7 +26,12 @@
     }
 
     .navbar .right-item .item {
-        width: 80% !important;
+        width: 75% !important;
+    }
+
+    .navbar .right-item .item:hover {
+        color: #6b6b6b !important;
+        background-color: transparent !important;
     }
 
     .navbar .right-item.show {
