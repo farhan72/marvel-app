@@ -6,7 +6,7 @@ import Loader from '../../components/loader';
 import { Redirect } from 'react-router-dom';
 
 const Index = () => {
-    const [isAuthenticated, setAuthenticatedStatus] = useState(false);
+    const [isAuthenticated, setAuthenticatedStatus] = useState(null);
     const [loading, setLoading] = useState(true);
     const login = () => {
         const now = new Date();
@@ -21,21 +21,20 @@ const Index = () => {
     useEffect(() => checkStatusAPI(), [])
 
     async function checkStatusAPI() {
-        try {
-            await axios.get(APIv1('comics', { limit: 5 }));
+        await axios.get(APIv1('comics', { limit: 5 })).then(response => {
             setAuthenticatedStatus(true);
             setLoading(false);
-        } catch (e) {
+        }).catch(err => {
             setAuthenticatedStatus(false);
             setLoading(false);
-        }
+        })
     }
 
     if (isAuthenticated) {
-        return  <Redirect to="/" />;
+        return <Redirect to="/" />;
     }
 
-    return (
+    return (isAuthenticated === false) ? (
         <>
             <Loader isLoading={loading} />
             <div style={styles.container}>
@@ -43,7 +42,7 @@ const Index = () => {
                     onClick={() => login()}>Login</button>
             </div>
         </>
-    );
+    ) : <Loader isLoading={true} />;
 }
 
 const styles = {
