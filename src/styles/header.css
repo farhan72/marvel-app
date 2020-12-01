@@ -1,0 +1,34 @@
+.navbar {
+    padding: 10px 0 10px 0;
+}
+.navbar .burger-button {
+    display: none !important;
+}
+.navbar .right-item {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+@media only screen and (min-width: 460px) and (max-width: 500px) {
+    .navbar .burger-button {
+        cursor: pointer;
+        display: flex !important;
+    }
+
+    .navbar .right-item {
+        position: absolute !important;
+        top: 50px;
+        left: 0;
+        background-color: #f1f1f1 !important;
+        width: 100%;
+        display: none !important;
+    }
+
+    .navbar .right-item .item {
+        width: 80% !important;
+    }
+
+    .navbar .right-item.show {
+        display: flex !important;
+    }
+}

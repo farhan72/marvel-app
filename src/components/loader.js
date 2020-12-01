@@ -3,7 +3,7 @@ import '../styles/modal.css'
 
 const Loader = ({ isLoading }) => {
     return isLoading ? (
-        <div className="container">
+        <div className="container-modal">
             <p className="body">Loading...</p>
         </div>
     ) : ''

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Header from '../header'
 import axios from 'axios';
 import { APIv1 } from '../../helper/authorization';
@@ -7,6 +7,7 @@ import Home from '../../containers/home';
 import Comics from '../../containers/comics';
 import Characters from '../../containers/characters';
 import Loader from '../loader'
+import { Container } from 'semantic-ui-react';
 
 function Layout() {
     const [isAnauthenticated, userAnauthenticated] = useState(null);
@@ -39,16 +40,27 @@ function Layout() {
     }
     return (isAnauthenticated === false) ? (
         <>
-            <Loader isLoading={loading} />
             <Header />
 
-            <div>
-                <Route exact path="/home" component={Home} />
-                <Route exact path="/comics" component={Comics} />
-                <Route exact path="/characters" component={Characters} />
+            <Container className="mt-1">
+                <Route exact path="/home" render={props => (
+                    <Suspense fallback={<Loader isLoading={loading} />}>
+                        <Home {...props} />
+                    </Suspense>
+                )} />
+                <Route exact path="/comics" render={props => (
+                    <Suspense fallback={<Loader isLoading={loading} />}>
+                        <Comics {...props} />
+                    </Suspense>
+                )} />
+                <Route exact path="/characters" render={props => (
+                    <Suspense fallback={<Loader isLoading={loading} />}>
+                        <Characters {...props} />
+                    </Suspense>
+                )} />
                 <Route exact path="**" render={() => <Redirect to="home" />} />
                 <Redirect from="/" to="home" />
-            </div>
+            </Container>
         </>
     ) : <Loader isLoading={true} />;
 }
