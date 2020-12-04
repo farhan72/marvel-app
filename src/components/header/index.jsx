@@ -37,7 +37,7 @@ function Header() {
 
     return (
         <Container className="navbar">
-            <Menu secondary>
+            <Menu>
                 <Menu.Item
                     as={NavLink}
                     to="/home"
