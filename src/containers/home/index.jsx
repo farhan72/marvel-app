@@ -1,49 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/home.css";
-import {
-  Banner,
-  BannerImage,
-  BannerItem,
-  BannerDescription,
-  BannerText,
-} from "../../styled-components/banner";
-import Slider from "react-slick";
+import Banner from "../../components/banner";
+import axios from "axios";
+import { APIv1 } from "../../helper/authorization";
 
 function Index() {
-  const settings = {
-    dots: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    arrows: false,
-  };
+  const [comics, setComics] = useState([]);
+
+  useEffect(() => {
+    fetchComicsData();
+  }, [comics]);
+  function fetchComicsData() {
+    const params = {
+      dateDescriptor: "lastWeek",
+      limit: 5,
+    };
+    axios
+      .get(APIv1("comics", params))
+      .then((result) => {
+        const { data } = result;
+        const comicData = data.data,
+          { results } = comicData;
+        setComics(results);
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
+  }
   return (
     <>
-      <Banner>
-        <Slider {...settings}>
-          <div>
-            <BannerItem>
-              <BannerImage src="https://cdn.pocket-lint.com/r/s/1200x/assets/images/151737-games-feature-batman-games-in-order-how-to-play-the-arkham-series-and-more-image1-m8vygjidfb.jpg" />
-              <BannerDescription>
-                <BannerText>
-                  <h1>Batman Arkham Knight</h1>
-                </BannerText>
-              </BannerDescription>
-            </BannerItem>
-          </div>
-          <div>
-            <BannerItem>
-              <BannerImage src="https://i.pinimg.com/originals/ce/05/40/ce05406160b493c152407fa4e08ffa17.jpg" />
-              <BannerDescription>
-                <BannerText>
-                  <h1>Batman Arkham Knight</h1>
-                </BannerText>
-              </BannerDescription>
-            </BannerItem>
-          </div>
-        </Slider>
-      </Banner>
+      <Banner dataComics={comics} />
     </>
   );
 }

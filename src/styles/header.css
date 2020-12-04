@@ -1,40 +1,47 @@
 .navbar {
-    padding: 10px 0 10px 0;
+  padding: 10px 0 10px 0;
+  position: relative;
 }
 .navbar .burger-button {
-    display: none !important;
+  display: none !important;
 }
 .navbar .right-item {
-    z-index: 99999 !important;
-    margin: 0 !important;
-    padding: 0 !important;
+  z-index: 99999 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  position: relative;
 }
 
 @media only screen and (min-width: 300px) and (max-width: 500px) {
-    .navbar .burger-button {
-        cursor: pointer;
-        display: flex !important;
-    }
+  .navbar .burger-button {
+    cursor: pointer;
+    display: flex !important;
+  }
 
-    .navbar .right-item {
-        position: absolute !important;
-        top: 50px;
-        left: 0;
-        background-color: #f1f1f1 !important;
-        width: 100%;
-        display: none !important;
-    }
+  .navbar .right-item {
+    position: absolute !important;
+    top: 55px;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff !important;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+    display: none !important;
+  }
 
-    .navbar .right-item .item {
-        width: 75% !important;
-    }
+  .navbar .right-item .item:hover {
+    color: #6b6b6b !important;
+    background-color: transparent !important;
+  }
 
-    .navbar .right-item .item:hover {
-        color: #6b6b6b !important;
-        background-color: transparent !important;
-    }
+  .navbar .right-item.show {
+    display: flex !important;
+  }
 
-    .navbar .right-item.show {
-        display: flex !important;
-    }
+  .navbar .right-item .item input {
+    width: 350px;
+  }
+
+  .navbar .right-item .item::before {
+    background: none !important;
+  }
 }

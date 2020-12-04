@@ -3,7 +3,7 @@ import { device } from "./size";
 import styled from "styled-components";
 
 const Banner = styled(Header)`
-  position: relative !important;
+  position: relative;
 `;
 
 const BannerItem = styled.div`
@@ -12,12 +12,11 @@ const BannerItem = styled.div`
   height: 350px;
 `;
 
-const BannerImage = styled.img`
+const BannerImage = styled.div`
   clip-path: polygon(0 0, 78% 0, 100% 100%, 0 100%);
-  width: 50%;
   height: 100%;
-  object-fit: cover;
-  display: block !important;
+  background-size: cover;
+  background-repeat: no-repeat;
 `;
 
 const BannerDescription = styled.div`

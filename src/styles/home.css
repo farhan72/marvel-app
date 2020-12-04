@@ -1,3 +1,8 @@
 .slick-dots {
   top: 300px;
 }
+
+.slick-prev:before,
+.slick-next:before {
+  color: #686868;
+}
