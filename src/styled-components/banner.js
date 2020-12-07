@@ -14,9 +14,11 @@ const BannerItem = styled.div`
 
 const BannerImage = styled.div`
   clip-path: polygon(0 0, 78% 0, 100% 100%, 0 100%);
+  width: 50%;
   height: 100%;
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: center;
 `;
 
 const BannerDescription = styled.div`

@@ -9,7 +9,7 @@ function Index() {
 
   useEffect(() => {
     fetchComicsData();
-  }, [comics]);
+  }, []);
   function fetchComicsData() {
     const params = {
       dateDescriptor: "lastWeek",
@@ -23,9 +23,7 @@ function Index() {
           { results } = comicData;
         setComics(results);
       })
-      .catch((error) => {
-        throw new Error(error);
-      });
+      .catch((error) => error);
   }
   return (
     <>

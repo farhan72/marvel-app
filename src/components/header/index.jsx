@@ -5,6 +5,7 @@ import "../../styles/header.css";
 import { NavLink, useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 import { APIv1 } from "../../helper/authorization";
+import Axios from "axios";
 
 function Header() {
   const history = useHistory(),
@@ -35,6 +36,13 @@ function Header() {
   useEffect(() => setActiveMenu(location.pathname.replace("/", "")), [
     location,
   ]);
+
+  const getAPIBySearchKey = (e) => {
+    const name = e.target.value;
+    Axios.get(APIv1("comics", name)).then((result) => {
+      console.log(result);
+    });
+  };
 
   return (
     <Container className="navbar">
@@ -67,7 +75,11 @@ function Header() {
           </Menu.Item>
           <Menu.Item className={`right-item ${isShowMenu ? "show" : ""}`}>
             <Menu.Item>
-              <Input icon="search" placeholder="Search..." />
+              <Input
+                icon="search"
+                placeholder="Search..."
+                onChange={(e) => getAPIBySearchKey(e)}
+              />
             </Menu.Item>
             <Menu.Item
               name="logout"
