@@ -25,7 +25,10 @@ function Layout() {
       })
       .catch((err) => {
         setLoading(false);
-        if (err.response.status === 401) {
+        if (err.response.status === 429) {
+          alert("Limit anda hari ini telah habis");
+          userAnauthenticated(true);
+        } else if (err.response.status === 401) {
           userAnauthenticated(true);
         }
       });
