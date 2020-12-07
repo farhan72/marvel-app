@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const Index = () => {
-    return <p>Ini comics list</p>
-}
+  return <p>Ini comics</p>;
+};
 
 export default Index;
