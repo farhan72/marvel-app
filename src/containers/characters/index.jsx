@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const Index = () => {
-    return <p>This is list of character</p>
-}
+  return <p>daftar karakter</p>;
+};
 
 export default Index;
