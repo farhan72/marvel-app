@@ -1,11 +1,7 @@
 import React from "react";
 
 const Index = () => {
-  return (
-    <>
-      <p>Ini comics</p>;
-    </>
-  );
+  return <p>This is comic list</p>;
 };
 
 export default Index;
